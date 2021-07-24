@@ -1,0 +1,28 @@
+{
+  "name": "fabiostefani.io.cleanarch",
+  "version": "1.0.0",
+  "description": "Curso de Clean Code e Clean Architecture do Rodrigo Branas",
+  "main": "index.js",
+  "scripts": {
+    "tsc:init": "tsc --init",
+    "build": "tsc",
+    "test": "tsc && jest dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabiostefani/CleanArchitecture.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fabiostefani/CleanArchitecture/issues"
+  },
+  "homepage": "https://github.com/fabiostefani/CleanArchitecture#readme",
+  "dependencies": {
+    "typescript": "^4.3.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "jest": "^27.0.6"
+  }
+}

@@ -1,0 +1,20 @@
+const validateCpfBefore = require("./validateCpf_before");
+const validateCpfAfter = require("./validateCpf_after");
+
+console.log('BEFORE');
+console.log('A: ' + validateCpfAfter.validate());
+console.log('B: ' + validateCpfBefore.validate("00000000000"));
+console.log('B: ' + validateCpfBefore.validate("86446422799"));
+console.log('B: ' + validateCpfBefore.validate("86446422784"));
+console.log('B: ' + validateCpfBefore.validate("864.464.227-84"));
+console.log('B: ' + validateCpfBefore.validate("91720489726"));
+console.log('B: ' + validateCpfBefore.validate("a1720489726"));
+console.log('===============================');
+console.log('AFTER');
+console.log('A: ' + validateCpfAfter.validate());
+console.log('A: ' + validateCpfAfter.validate("00000000000"));
+console.log('A: ' + validateCpfAfter.validate("86446422799"));
+console.log('A: ' + validateCpfAfter.validate("86446422784"));
+console.log('A: ' + validateCpfAfter.validate("864.464.227-84"));
+console.log('A: ' + validateCpfAfter.validate("91720489726"));
+console.log('A: ' + validateCpfAfter.validate("a1720489726"));

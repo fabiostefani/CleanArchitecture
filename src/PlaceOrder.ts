@@ -2,14 +2,22 @@ import Coupon from "./Coupon";
 import Order from "./Order";
 import PlaceOrderInput from "./PlaceOrderInput";
 import PlaceOrderOutput from "./PlaceOrderOutput";
+import Item from "./Item";
 
 export default class PlaceOrder {
     coupons: Coupon[];
     orders: Order[];
+    items: Item[];
     constructor() {
         this.coupons = [
-            new Coupon("VALE20",20)
+            new Coupon("VALE20",20, new Date("2021-10-10")),
+            new Coupon("VALE20_EXPIRED",20, new Date("2020-10-10"))
         ];
+        this.items = [
+            new Item("1", "Guitarra", 1000, 100, 50, 15, 30),
+            new Item("2", "Amplificador", 5000, 50, 50, 50, 22),
+            new Item("3", "Cabo", 30, 10, 10, 10, 1)
+        ]
         this.orders = [];
     }
 

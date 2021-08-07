@@ -1,10 +1,10 @@
 export default class OrderItem {
-    description: string;
+    id: string;
     price: number;
     quantity: number;
-    constructor(description: string, price: number, quantity: number)
+    constructor(id: string, price: number, quantity: number)
     {
-        this.description = description;
+        this.id = id;
         this.price = price;
         this.quantity = quantity;
     }

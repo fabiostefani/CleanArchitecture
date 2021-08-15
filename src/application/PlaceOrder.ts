@@ -1,29 +1,27 @@
-import Order from "./Order";
+import Order from "../domain/entity/Order";
 import PlaceOrderInput from "./PlaceOrderInput";
 import PlaceOrderOutput from "./PlaceOrderOutput";
-import FreightCalculator from "./FreightCalculator";
-import ZipCodeCalculatorAPIMemory from "./ZipCodeCalculatorAPIMemory";
-import ItemRepository from "./ItemRepository";
-import CouponRepository from "./CouponRepository";
-import OrderRepository from "./OrderRepository";
+import ItemRepository from "../domain/repository/ItemRepository";
+import OrderRepository from "../domain/repository/OrderRepository";
+import CouponRepository from "../domain/repository/CouponRepository";
+import FreightCalculator from "../domain/service/FreightCalculator";
+import ZipCodeCalculatorAPI from "../domain/gateway/ZipCodeCalculatorAPI";
 
-export default class PlaceOrder {        
-    zipcodeCalculator: ZipCodeCalculatorAPIMemory;
+export default class PlaceOrder {            
     itemRepositoy: ItemRepository;
     couponRepository: CouponRepository;
-    orderRepository: OrderRepository;
-    zipCodeCalculatorAPI: ZipCodeCalculatorAPIMemory;
-    constructor(itemRepositoy: ItemRepository, couponRepository: CouponRepository, orderRepository: OrderRepository, zipCodeCalculatorAPI: ZipCodeCalculatorAPIMemory) {
+    orderRepository: OrderRepository;    
+    zipCodeCalculatorAPI: ZipCodeCalculatorAPI;
+    constructor(itemRepositoy: ItemRepository, couponRepository: CouponRepository, orderRepository: OrderRepository, zipCodeCalculatorAPI: ZipCodeCalculatorAPI) {
         this.itemRepositoy = itemRepositoy;        
-        this.couponRepository = couponRepository;        
-        this.zipcodeCalculator = new ZipCodeCalculatorAPIMemory()
+        this.couponRepository = couponRepository;                
         this.orderRepository = orderRepository;
         this.zipCodeCalculatorAPI = zipCodeCalculatorAPI;
     }
 
     execute(input: PlaceOrderInput): PlaceOrderOutput {
         const order = new Order(input.cpf);
-        const distance = this.zipcodeCalculator.calculate(input.zipCode, "99.999-999");
+        const distance = this.zipCodeCalculatorAPI.calculate(input.zipCode, "99.999-999");
         for (const orderItem of input.items) {
             const item = this.itemRepositoy.getById(orderItem.id);
             if (!item) throw new Error("Item not found");            

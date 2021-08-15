@@ -1,6 +1,6 @@
-import Coupon from "./Coupon";
 import Cpf from "./Cpf";
 import OrderItem from "./OrderItem";
+import Coupon from "./Coupon";
 
 export default class Order {
     cpf: Cpf;

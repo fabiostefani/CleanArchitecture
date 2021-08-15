@@ -1,5 +1,5 @@
-import FreightCalculator from "./FreightCalculator";
-import Item from "./Item";
+import Item from "../../src/domain/entity/Item";
+import FreightCalculator from "../../src/domain/service/FreightCalculator";
 
 test("Deve calcular o Frete do Guitarra", function() {
     const item = new Item("1", "Guitarra", 1000, 100, 50, 15, 3);

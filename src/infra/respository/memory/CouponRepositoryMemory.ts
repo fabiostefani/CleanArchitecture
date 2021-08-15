@@ -1,5 +1,5 @@
-import Coupon from "./Coupon";
-import CouponRepository from "./CouponRepository";
+import CouponRepository from "../../../domain/repository/CouponRepository";
+import Coupon from "../../../domain/entity/Coupon";
 
 class CouponRepositoryMemory implements CouponRepository {
     coupons: Coupon[];

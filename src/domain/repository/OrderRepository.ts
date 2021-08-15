@@ -1,4 +1,4 @@
-import Order from "./Order";
+import Order from "../entity/Order";
 
 interface OrderRepository {
     save(order: Order) : void;

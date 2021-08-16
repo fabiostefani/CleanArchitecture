@@ -6,7 +6,7 @@
   "scripts": {
     "tsc:init": "tsc --init",
     "build": "tsc",
-    "test": "tsc && jest ./dist"
+    "test": "tsc && jest ./dist --forceExit"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/fabiostefani/CleanArchitecture#readme",
   "dependencies": {
+    "pg-promise": "^10.11.0",
     "typescript": "^4.3.5"
   },
   "devDependencies": {

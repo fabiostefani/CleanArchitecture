@@ -1,7 +1,7 @@
 import Item from "../entity/Item";
 
 interface ItemRepository {
-    getById(id: string) : Item | undefined;
+    getById(id: string) : Promise<Item | undefined>;
 }
 
 export default ItemRepository;

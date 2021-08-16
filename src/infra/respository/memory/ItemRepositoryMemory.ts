@@ -12,8 +12,8 @@ class ItemRepositoryMemory implements ItemRepository{
         ]
     }
 
-    getById(id: string): Item | undefined {
-        return this.items.find(item => item.id === id);
+    getById(id: string): Promise<Item | undefined> {
+        return Promise.resolve(this.items.find(item => item.id === id));
     }
 }
 

@@ -19,11 +19,11 @@ export default class PlaceOrder {
         this.zipCodeCalculatorAPI = zipCodeCalculatorAPI;
     }
 
-    execute(input: PlaceOrderInput): PlaceOrderOutput {
+    async execute(input: PlaceOrderInput): Promise<PlaceOrderOutput> {
         const order = new Order(input.cpf);
         const distance = this.zipCodeCalculatorAPI.calculate(input.zipCode, "99.999-999");
         for (const orderItem of input.items) {
-            const item = this.itemRepositoy.getById(orderItem.id);
+            const item = await this.itemRepositoy.getById(orderItem.id);
             if (!item) throw new Error("Item not found");            
             order.addItem(orderItem.id, item.price, orderItem.quantity);            
             order.freight += FreightCalculator.calculate(distance, item) * orderItem.quantity;

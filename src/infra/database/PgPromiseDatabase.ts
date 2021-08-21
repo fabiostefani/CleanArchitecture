@@ -9,6 +9,7 @@ class PgPromiseDatabase implements Database {
         this.pgp = pgp()("postgres://postgres:Postgres2021!@localhost:5432/postgres");
     }
 
+    
     static getInstance() {
         if (!PgPromiseDatabase.instance)
         {
@@ -16,13 +17,17 @@ class PgPromiseDatabase implements Database {
         }
         return PgPromiseDatabase.instance;
     }
-
+    
     many(query: string, parameters: any) {
         return this.pgp.query(query, parameters);
     }
     
     one(query: string, parameters: any) {
         return this.pgp.oneOrNone(query, parameters);
+    }
+
+    none(query: string, parameters: any): void {
+        return this.pgp.none(query, parameters);
     }
 }
 

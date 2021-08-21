@@ -7,18 +7,22 @@ class OrderRepositoryMemory implements OrderRepository {
         this.orders = [];
     }
 
-    get(code: string): Order {
+    async get(code: string): Promise<Order> {
         const order = this.orders.find(order => order.code.value === code);
         if (!order) throw new Error("Order no found");
-        return order;
+        return Promise.resolve(order);
     }
 
-    count(): number {
-        return this.orders.length;
+    async count(): Promise<number> {
+        return Promise.resolve(this.orders.length);
     }
 
-    save(order: Order) {
+    async save(order: Order) : Promise<void> {
         this.orders.push(order);
+    }
+
+    async clean() : Promise<void> {
+        Promise.resolve(this.orders = []);
     }
 }
 

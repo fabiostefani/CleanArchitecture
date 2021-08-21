@@ -7,6 +7,7 @@ import ZipCodeCalculatorAPIMemory from "../../src/infra/gateway/memory/ZipCodeCa
 import ItemRepositoryDatabase from "../../src/infra/respository/database/ItemRepositoryDatabase";
 import PgPromiseDatabase from "../../src/infra/database/PgPromiseDatabase";
 import CouponRepositoryDatabase from "../../src/infra/respository/database/CouponRepositoryDatabase";
+import OrderRepositoryDatabase from "../../src/infra/respository/database/OrderRepositoryDatabase";
 
 test("Deve fazer um pedido", async function() {
     const input = new PlaceOrderInput( {
@@ -16,12 +17,13 @@ test("Deve fazer um pedido", async function() {
             { id: "1", quantity: 2},
             { id: "2", quantity: 1},
             { id: "3", quantity: 3}
-        ],
+        ], 
         coupon: "VALE20"
     });
     const itemRepository = new ItemRepositoryDatabase(PgPromiseDatabase.getInstance());
     const couponRepository = new CouponRepositoryDatabase(PgPromiseDatabase.getInstance());
-    const orderRepository = new OrderRepositoryMemory();
+    const orderRepository = new OrderRepositoryDatabase(PgPromiseDatabase.getInstance());
+    await orderRepository.clean();
     const zipCodeCalculatorAPI = new ZipCodeCalculatorAPIMemory();
     const placeOrder = new PlaceOrder(itemRepository, couponRepository, orderRepository, zipCodeCalculatorAPI);
     const output = await placeOrder.execute(input);
@@ -42,7 +44,8 @@ test("Deve fazer um pedido com cupom de desconto expirado", async function() {
     const itemRepository = new ItemRepositoryDatabase(PgPromiseDatabase.getInstance());
     const couponRepository = new CouponRepositoryDatabase(PgPromiseDatabase.getInstance());
     //const couponRepository = new CouponRepositoryMemory();
-    const orderRepository = new OrderRepositoryMemory();
+    const orderRepository = new OrderRepositoryDatabase(PgPromiseDatabase.getInstance());
+    await orderRepository.clean();
     const zipCodeCalculatorAPI = new ZipCodeCalculatorAPIMemory();
     const placeOrder = new PlaceOrder(itemRepository, couponRepository, orderRepository, zipCodeCalculatorAPI);
     const output = await placeOrder.execute(input);
@@ -62,7 +65,8 @@ test("Deve fazer um pedido com calculo de frete", async function() {
     });
     const itemRepository = new ItemRepositoryDatabase(PgPromiseDatabase.getInstance());
     const couponRepository = new CouponRepositoryDatabase(PgPromiseDatabase.getInstance());
-    const orderRepository = new OrderRepositoryMemory();
+    const orderRepository = new OrderRepositoryDatabase(PgPromiseDatabase.getInstance());
+    await orderRepository.clean();
     const zipCodeCalculatorAPI = new ZipCodeCalculatorAPIMemory();
     const placeOrder = new PlaceOrder(itemRepository, couponRepository, orderRepository, zipCodeCalculatorAPI);
     const output = await placeOrder.execute(input);
@@ -83,7 +87,8 @@ test("Deve fazer um pedido calculando o código", async function() {
     });
     const itemRepository = new ItemRepositoryDatabase(PgPromiseDatabase.getInstance());
     const couponRepository = new CouponRepositoryDatabase(PgPromiseDatabase.getInstance());
-    const orderRepository = new OrderRepositoryMemory();
+    const orderRepository = new OrderRepositoryDatabase(PgPromiseDatabase.getInstance());
+    await orderRepository.clean();
     const zipCodeCalculatorAPI = new ZipCodeCalculatorAPIMemory();
     const placeOrder = new PlaceOrder(itemRepository, couponRepository, orderRepository, zipCodeCalculatorAPI);
     await placeOrder.execute(input);

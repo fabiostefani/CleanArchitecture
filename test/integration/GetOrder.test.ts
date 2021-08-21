@@ -8,6 +8,7 @@ import ItemRepositoryDatabase from "../../src/infra/respository/database/ItemRep
 import PgPromiseDatabase from "../../src/infra/database/PgPromiseDatabase";
 import CouponRepositoryDatabase from "../../src/infra/respository/database/CouponRepositoryDatabase";
 import GetOrder from "../../src/application/GetOrder";
+import OrderRepositoryDatabase from "../../src/infra/respository/database/OrderRepositoryDatabase";
 
 test("Deve consultar um pedido", async function() {
     const input = new PlaceOrderInput( {
@@ -17,13 +18,14 @@ test("Deve consultar um pedido", async function() {
             { id: "1", quantity: 2},
             { id: "2", quantity: 1},
             { id: "3", quantity: 3}
-        ],
+        ], 
         coupon: "VALE20"
     });
     const itemRepository = new ItemRepositoryDatabase(PgPromiseDatabase.getInstance());
     const couponRepository = new CouponRepositoryDatabase(PgPromiseDatabase.getInstance());
-    const orderRepository = new OrderRepositoryMemory();
+    const orderRepository = new OrderRepositoryDatabase(PgPromiseDatabase.getInstance());
     const zipCodeCalculatorAPI = new ZipCodeCalculatorAPIMemory();
+    await orderRepository.clean();
     const placeOrder = new PlaceOrder(itemRepository, couponRepository, orderRepository, zipCodeCalculatorAPI);
     const output = await placeOrder.execute(input);
     const getOrder = new GetOrder(itemRepository, couponRepository, orderRepository);

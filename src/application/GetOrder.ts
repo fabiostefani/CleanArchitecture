@@ -19,7 +19,7 @@ export default class GetOrder {
     }
 
     async execute(code: string): Promise<GetOrderOutput> {
-        const order = this.orderRepository.get(code);
+        const order = await this.orderRepository.get(code);
         const orderItems: any[] = [];
         for(const orderItem of order.items) {
             const item = await this.itemRepositoy.getById(orderItem.id);

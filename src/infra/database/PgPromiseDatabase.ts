@@ -2,13 +2,25 @@ import pgp from "pg-promise";
 import Database from "./database";
 
 class PgPromiseDatabase implements Database {
-    pgp: any;
-    constructor() {
-        this.pgp = pgp()("postgres://postgres:123456@localhost:5433/postgres");
+    private pgp: any;
+    static instance : PgPromiseDatabase;
+
+    private constructor() {
+        this.pgp = pgp()("postgres://postgres:Postgres2021!@localhost:5432/postgres");
     }
+
+    static getInstance() {
+        if (!PgPromiseDatabase.instance)
+        {
+            PgPromiseDatabase.instance = new PgPromiseDatabase();
+        }
+        return PgPromiseDatabase.instance;
+    }
+
     many(query: string, parameters: any) {
         return this.pgp.query(query, parameters);
     }
+    
     one(query: string, parameters: any) {
         return this.pgp.oneOrNone(query, parameters);
     }

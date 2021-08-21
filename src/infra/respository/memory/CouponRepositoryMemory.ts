@@ -9,8 +9,8 @@ class CouponRepositoryMemory implements CouponRepository {
             new Coupon("VALE20_EXPIRED",20, new Date("2020-10-10"))
         ];        
     }
-    getByCode(code: string): Coupon | undefined {
-        return this.coupons.find(coupon => coupon.code == code);
+    getByCode(code: string): Promise<Coupon | undefined> {
+        return Promise.resolve(this.coupons.find(coupon => coupon.code == code));
     }
 }
 

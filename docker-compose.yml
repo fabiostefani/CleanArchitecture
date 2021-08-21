@@ -1,17 +1,20 @@
-version: '3.8'
+version: "3.9"
 services:
-db:
-    container_name: pg_container
-    image: postgres
-    restart: always
+  pg:
+    image: postgres:13.4
+    container_name: "postgres"
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: test_db
-    ports:
-      - "5432:5432"
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Postgres2021!
+      - TZ=GMT
     volumes:
-      - c:\PostgreSql-Snippets\infile:\infile
-      - pg_data:/var/lib/postgresql/data/
-volumes:
-  pg_data:
+      - "./data/postgres:/var/lib/postgresql/data"
+    ports:
+      - 5432:5432
+    networks:
+      - postgres-network
+
+networks:
+  postgres-network:
+    driver: bridge

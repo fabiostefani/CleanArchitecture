@@ -3,8 +3,16 @@ import OrderRepository from "../../../domain/repository/OrderRepository";
 
 class OrderRepositoryMemory implements OrderRepository {
     orders: Order[];
-    constructor(){
+    static instance: OrderRepositoryMemory;
+    private constructor(){
         this.orders = [];
+    }
+
+    static getInstance () {
+        if (!OrderRepositoryMemory.instance) {
+            OrderRepositoryMemory.instance = new OrderRepositoryMemory();
+        }
+        return OrderRepositoryMemory.instance;
     }
 
     async get(code: string): Promise<Order> {

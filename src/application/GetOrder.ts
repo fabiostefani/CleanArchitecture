@@ -1,21 +1,17 @@
-import Order from "../domain/entity/Order";
-import PlaceOrderInput from "./PlaceOrderInput";
-import PlaceOrderOutput from "./PlaceOrderOutput";
 import ItemRepository from "../domain/repository/ItemRepository";
 import OrderRepository from "../domain/repository/OrderRepository";
 import CouponRepository from "../domain/repository/CouponRepository";
-import FreightCalculator from "../domain/service/FreightCalculator";
-import ZipCodeCalculatorAPI from "../domain/gateway/ZipCodeCalculatorAPI";
 import GetOrderOutput from "./GetOrderOutput";
+import RepositoryFactory from "../domain/factory/RepositoryFactory";
 
 export default class GetOrder {            
     itemRepositoy: ItemRepository;
     couponRepository: CouponRepository;
     orderRepository: OrderRepository;        
-    constructor(itemRepositoy: ItemRepository, couponRepository: CouponRepository, orderRepository: OrderRepository) {
-        this.itemRepositoy = itemRepositoy;        
-        this.couponRepository = couponRepository;                
-        this.orderRepository = orderRepository;        
+    constructor(repositoryFactory: RepositoryFactory) {
+        this.itemRepositoy = repositoryFactory.createItemRepository();        
+        this.couponRepository = repositoryFactory.createCuponRepository();                
+        this.orderRepository = repositoryFactory.createOrderRepository();        
     }
 
     async execute(code: string): Promise<GetOrderOutput> {

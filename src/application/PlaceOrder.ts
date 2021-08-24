@@ -6,16 +6,17 @@ import OrderRepository from "../domain/repository/OrderRepository";
 import CouponRepository from "../domain/repository/CouponRepository";
 import FreightCalculator from "../domain/service/FreightCalculator";
 import ZipCodeCalculatorAPI from "../domain/gateway/ZipCodeCalculatorAPI";
+import RepositoryFactory from "../domain/factory/RepositoryFactory";
 
 export default class PlaceOrder {            
     itemRepositoy: ItemRepository;
     couponRepository: CouponRepository;
     orderRepository: OrderRepository;    
     zipCodeCalculatorAPI: ZipCodeCalculatorAPI;
-    constructor(itemRepositoy: ItemRepository, couponRepository: CouponRepository, orderRepository: OrderRepository, zipCodeCalculatorAPI: ZipCodeCalculatorAPI) {
-        this.itemRepositoy = itemRepositoy;        
-        this.couponRepository = couponRepository;                
-        this.orderRepository = orderRepository;
+    constructor(repositoryFactory: RepositoryFactory, zipCodeCalculatorAPI: ZipCodeCalculatorAPI) {
+        this.itemRepositoy = repositoryFactory.createItemRepository();        
+        this.couponRepository = repositoryFactory.createCuponRepository();                
+        this.orderRepository = repositoryFactory.createOrderRepository();
         this.zipCodeCalculatorAPI = zipCodeCalculatorAPI;
     }
 

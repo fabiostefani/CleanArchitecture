@@ -19,8 +19,9 @@ class OrderRepositoryDatabase implements OrderRepository {
     
     async get(code: string): Promise<Order> {
         const orderData = await this.database.one("select * from ccca.order where code = $1", [code]);
-        const orderItemsData = await this.database.many("select * from ccca.order_item where id_order = $1", [orderData.id]);
-        const order = new Order(orderData.cpf, new Date(orderData.issueDate), orderData.serial);
+        if (!orderData) throw new Error("Order not found");        
+        const orderItemsData = await this.database.many("select * from ccca.order_item where id_order = $1", [orderData.id]);        
+        const order = new Order(orderData.cpf, new Date(orderData.issue_date), orderData.serial);
         for (const orderItemData of orderItemsData) {
             order.addItem(orderItemData.id_item, parseFloat(orderItemData.price), orderItemData.quantity);
         }
@@ -28,8 +29,8 @@ class OrderRepositoryDatabase implements OrderRepository {
             const couponData = await this.database.one("select * from ccca.coupon where code = $1", [orderData.coupon_code]);
             const coupon = new Coupon(couponData.code, couponData.percentage, new Date(couponData.expire_date));
             order.addCoupon(coupon);
-        }
-        order.freight = parseFloat(orderData.freight);
+        }        
+        order.freight = parseFloat(orderData.freight);                
         return order;
     }
 

@@ -1,12 +1,13 @@
 import PlaceOrder from "../../src/application/PlaceOrder";
 import PlaceOrderInput from "../../src/application/PlaceOrderInput";
 import ZipCodeCalculatorAPIMemory from "../../src/infra/gateway/memory/ZipCodeCalculatorAPIMemory";
-import DatabaseRepositoryFactory from "../../src/infra/factory/DatabaseRepositoryFactory";
+import MemoryRepositoryFactory from "../../src/infra/factory/MemoryRepositoryFactory";
 
 test("Deve fazer um pedido", async function() {
     const input = new PlaceOrderInput( {
         cpf: "778.278.412-36",
         zipCode: "11.111-111",
+        issueDate: new Date("2021-10-10"),
         items: [
             { id: "1", quantity: 2},
             { id: "2", quantity: 1},
@@ -14,7 +15,7 @@ test("Deve fazer um pedido", async function() {
         ], 
         coupon: "VALE20"
     });
-    const repositoryFactory = new DatabaseRepositoryFactory();        
+    const repositoryFactory = new MemoryRepositoryFactory();        
     const orderRepository = repositoryFactory.createOrderRepository();
     await orderRepository.clean();
     const zipCodeCalculatorAPI = new ZipCodeCalculatorAPIMemory();
@@ -27,6 +28,7 @@ test("Deve fazer um pedido com cupom de desconto expirado", async function() {
     const input = new PlaceOrderInput( {
         cpf: "778.278.412-36",
         zipCode: "11.111-111",
+        issueDate: new Date("2021-10-10"),
         items: [
             { id: "1", quantity: 2},
             { id: "2", quantity: 1},
@@ -34,7 +36,7 @@ test("Deve fazer um pedido com cupom de desconto expirado", async function() {
         ],
         coupon: "VALE20_EXPIRED"
     });
-    const repositoryFactory = new DatabaseRepositoryFactory();        
+    const repositoryFactory = new MemoryRepositoryFactory();        
     const orderRepository = repositoryFactory.createOrderRepository();
     await orderRepository.clean();
     const zipCodeCalculatorAPI = new ZipCodeCalculatorAPIMemory();
@@ -47,6 +49,7 @@ test("Deve fazer um pedido com calculo de frete", async function() {
     const input = new PlaceOrderInput( {
         cpf: "778.278.412-36",
         zipCode: "11.111-111",
+        issueDate: new Date("2021-10-10"),
         items: [
             { id: "1", quantity: 2},
             { id: "2", quantity: 1},
@@ -54,7 +57,7 @@ test("Deve fazer um pedido com calculo de frete", async function() {
         ],
         coupon: "VALE20_EXPIRED"
     });
-    const repositoryFactory = new DatabaseRepositoryFactory();    
+    const repositoryFactory = new MemoryRepositoryFactory();    
     const orderRepository = repositoryFactory.createOrderRepository();
     await orderRepository.clean();
     const zipCodeCalculatorAPI = new ZipCodeCalculatorAPIMemory();
@@ -75,7 +78,7 @@ test("Deve fazer um pedido calculando o código", async function() {
         issueDate: new Date("2020-10-10"),
         coupon: "VALE20_EXPIRED"
     });
-    const repositoryFactory = new DatabaseRepositoryFactory();        
+    const repositoryFactory = new MemoryRepositoryFactory();        
     const orderRepository = repositoryFactory.createOrderRepository();
     await orderRepository.clean();
     const zipCodeCalculatorAPI = new ZipCodeCalculatorAPIMemory();

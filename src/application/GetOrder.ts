@@ -25,7 +25,7 @@ export default class GetOrder {
                 quantity: orderItem.quantity
             }
             orderItems.push(orderItemOutput);
-        }
+        }        
         return new GetOrderOutput({
             code: order.code.value,
             freight: order.freight,

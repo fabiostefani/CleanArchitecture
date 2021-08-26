@@ -3,11 +3,13 @@ import PlaceOrderInput from "../../src/application/PlaceOrderInput";
 import ZipCodeCalculatorAPIMemory from "../../src/infra/gateway/memory/ZipCodeCalculatorAPIMemory";
 import GetOrder from "../../src/application/GetOrder";
 import DatabaseRepositoryFactory from "../../src/infra/factory/DatabaseRepositoryFactory";
+import MemoryRepositoryFactory from "../../src/infra/factory/MemoryRepositoryFactory";
 
 test("Deve consultar um pedido", async function() {
     const input = new PlaceOrderInput( {
         cpf: "778.278.412-36",
         zipCode: "11.111-111",
+        issueDate: new Date("2021-10-10"),
         items: [
             { id: "1", quantity: 2},
             { id: "2", quantity: 1},

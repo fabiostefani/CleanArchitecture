@@ -7,7 +7,7 @@
     "tsc:init": "tsc --init",
     "build": "tsc",
     "test": "tsc && jest ./dist --forceExit",
-    "main": "tsc && node ./dist/src/infra/http/express"
+    "main": "tsc && node ./dist/src/main"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/fabiostefani/CleanArchitecture#readme",
   "dependencies": {
+    "@hapi/hapi": "^20.1.5",
     "@types/express": "^4.17.13",
+    "@types/hapi__hapi": "^20.0.9",
     "axios": "^0.21.1",
     "express": "^4.17.1",
     "pg-promise": "^10.11.0",

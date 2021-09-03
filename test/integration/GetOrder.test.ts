@@ -1,9 +1,21 @@
-import PlaceOrder from "../../src/application/PlaceOrder";
-import PlaceOrderInput from "../../src/application/PlaceOrderInput";
+import PlaceOrder from "../../src/application/place-order/PlaceOrder";
+import PlaceOrderInput from "../../src/application/place-order/PlaceOrderInput";
 import ZipCodeCalculatorAPIMemory from "../../src/infra/gateway/memory/ZipCodeCalculatorAPIMemory";
-import GetOrder from "../../src/application/GetOrder";
+import GetOrder from "../../src/application/get-order/GetOrder";
 import DatabaseRepositoryFactory from "../../src/infra/factory/DatabaseRepositoryFactory";
 import MemoryRepositoryFactory from "../../src/infra/factory/MemoryRepositoryFactory";
+import RepositoryFactory from "../../src/domain/factory/RepositoryFactory";
+import ZipCodeCalculatorAPI from "../../src/domain/gateway/ZipCodeCalculatorAPI";
+
+let repositoryFactory: RepositoryFactory;
+let zipCodeCalculatorAPI: ZipCodeCalculatorAPI;
+
+beforeEach(async function() {
+    repositoryFactory = new DatabaseRepositoryFactory();        
+    zipCodeCalculatorAPI = new ZipCodeCalculatorAPIMemory();
+    const orderRepository = repositoryFactory.createOrderRepository();
+    await orderRepository.clean();
+})
 
 test("Deve consultar um pedido", async function() {
     const input = new PlaceOrderInput( {
@@ -17,10 +29,7 @@ test("Deve consultar um pedido", async function() {
         ], 
         coupon: "VALE20"
     });
-    const repositoryFactory = new DatabaseRepositoryFactory();        
-    const zipCodeCalculatorAPI = new ZipCodeCalculatorAPIMemory();
-    const orderRepository = repositoryFactory.createOrderRepository();
-    await orderRepository.clean();
+    
     const placeOrder = new PlaceOrder(repositoryFactory, zipCodeCalculatorAPI);
     const output = await placeOrder.execute(input);
     const getOrder = new GetOrder(repositoryFactory);

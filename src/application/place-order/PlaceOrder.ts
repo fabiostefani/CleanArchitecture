@@ -1,12 +1,12 @@
-import Order from "../domain/entity/Order";
-import PlaceOrderInput from "./PlaceOrderInput";
+import Order from "../../domain/entity/Order";
 import PlaceOrderOutput from "./PlaceOrderOutput";
-import ItemRepository from "../domain/repository/ItemRepository";
-import OrderRepository from "../domain/repository/OrderRepository";
-import CouponRepository from "../domain/repository/CouponRepository";
-import FreightCalculator from "../domain/service/FreightCalculator";
-import ZipCodeCalculatorAPI from "../domain/gateway/ZipCodeCalculatorAPI";
-import RepositoryFactory from "../domain/factory/RepositoryFactory";
+import ItemRepository from "../../domain/repository/ItemRepository";
+import OrderRepository from "../../domain/repository/OrderRepository";
+import CouponRepository from "../../domain/repository/CouponRepository";
+import FreightCalculator from "../../domain/service/FreightCalculator";
+import ZipCodeCalculatorAPI from "../../domain/gateway/ZipCodeCalculatorAPI";
+import RepositoryFactory from "../../domain/factory/RepositoryFactory";
+import PlaceOrderInput from "./PlaceOrderInput";
 
 export default class PlaceOrder {            
     itemRepositoy: ItemRepository;
@@ -21,7 +21,7 @@ export default class PlaceOrder {
     }
 
     async execute(input: PlaceOrderInput): Promise<PlaceOrderOutput> {
-        const sequence = await this.orderRepository.count() + 1;
+        const sequence = await this.orderRepository.count() + 1;        
         const order = new Order(input.cpf, input.issueDate, sequence);
         const distance = this.zipCodeCalculatorAPI.calculate(input.zipCode, "99.999-999");
         for (const orderItem of input.items) {

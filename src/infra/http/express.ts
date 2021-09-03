@@ -1,5 +1,5 @@
 import express from "express";
-import GetOrder from "../../application/GetOrder";
+import GetOrder from "../../application/get-order/GetOrder";
 import DatabaseRepositoryFactory from "../factory/DatabaseRepositoryFactory";
 const app = express();
 

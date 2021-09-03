@@ -1,8 +1,8 @@
-import ItemRepository from "../domain/repository/ItemRepository";
-import OrderRepository from "../domain/repository/OrderRepository";
-import CouponRepository from "../domain/repository/CouponRepository";
+import OrderRepository from "../../domain/repository/OrderRepository";
+import CouponRepository from "../../domain/repository/CouponRepository";
+import RepositoryFactory from "../../domain/factory/RepositoryFactory";
+import ItemRepository from "../../domain/repository/ItemRepository";
 import GetOrderOutput from "./GetOrderOutput";
-import RepositoryFactory from "../domain/factory/RepositoryFactory";
 
 export default class GetOrder {            
     itemRepositoy: ItemRepository;

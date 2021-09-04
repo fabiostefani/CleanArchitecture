@@ -8,6 +8,7 @@ export default class Order {
     items: OrderItem[];
     coupon: Coupon | undefined;
     freight: number;
+    taxes: number;
     code: OrderCode;
     issueData: Date;
     sequence: number;

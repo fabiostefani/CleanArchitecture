@@ -29,6 +29,7 @@ export default class PlaceOrder {
             if (!item) throw new Error("Item not found");            
             order.addItem(orderItem.id, item.price, orderItem.quantity);            
             order.freight += FreightCalculator.calculate(distance, item) * orderItem.quantity;
+            //const taxTable = await this.
         }
         if (input.coupon) {
             const coupon = await this.couponRepository.getByCode(input.coupon);
@@ -39,7 +40,8 @@ export default class PlaceOrder {
         return new PlaceOrderOutput({            
             code: order.code.value,
             total: total,
-            freight: order.freight
+            freight: order.freight,
+            taxes: order.taxes
         });
     }
 }

@@ -34,5 +34,5 @@ test("Deve consultar um pedido", async function() {
     const output = await placeOrder.execute(input);
     const getOrder = new GetOrder(repositoryFactory);
     const getOrderOutput = await getOrder.execute(output.code);        
-    expect(getOrderOutput.total).toBe(5982);    
+    expect(getOrderOutput.total).toBe(5982);        
 })

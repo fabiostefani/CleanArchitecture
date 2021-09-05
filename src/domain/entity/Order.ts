@@ -17,6 +17,7 @@ export default class Order {
         this.cpf = new Cpf(cpf);
         this.items = [];
         this.freight = 0;
+        this.taxes = 0;
         this.issueData = issueDate;
         this.sequence = sequence;
         this.code = new OrderCode(issueDate, sequence);

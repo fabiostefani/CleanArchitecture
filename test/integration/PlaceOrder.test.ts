@@ -4,6 +4,7 @@ import ZipCodeCalculatorAPIMemory from "../../src/infra/gateway/memory/ZipCodeCa
 import MemoryRepositoryFactory from "../../src/infra/factory/MemoryRepositoryFactory";
 import RepositoryFactory from "../../src/domain/factory/RepositoryFactory";
 import ZipCodeCalculatorAPI from "../../src/domain/gateway/ZipCodeCalculatorAPI";
+import DatabaseRepositoryFactory from "../../src/infra/factory/DatabaseRepositoryFactory";
 
 let repositoryFactory: RepositoryFactory;
 let zipCodeCalculatorAPI: ZipCodeCalculatorAPI;

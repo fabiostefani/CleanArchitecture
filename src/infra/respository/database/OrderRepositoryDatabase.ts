@@ -11,7 +11,7 @@ class OrderRepositoryDatabase implements OrderRepository {
     }
     
     async save(order: Order): Promise<void> {
-        const orderData  =await this.database.one("insert into ccca.order (code, cpf, issue_date, freight, serial, coupon_code) values ($1,$2,$3,$4,$5,$6) returning *", [order.code.value, order.cpf.value, order.issueData, order.freight, order.sequence, order.coupon?.code]);
+        const orderData = await this.database.one("insert into ccca.order (code, cpf, issue_date, freight, serial, coupon_code, taxes) values ($1,$2,$3,$4,$5,$6,$7) returning *", [order.code.value, order.cpf.value, order.issueData, order.freight, order.sequence, order.coupon?.code, order.taxes]);
         for (const orderItem of order.items ) {
             await this.database.one("insert into ccca.order_item (id_order, id_item, price, quantity) values ($1,$2,$3,$4)", [orderData.id, orderItem.id, orderItem.price, orderItem.quantity]);
         }

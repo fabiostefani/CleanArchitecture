@@ -3,7 +3,6 @@ import PlaceOrderInput from "../../src/application/place-order/PlaceOrderInput";
 import ZipCodeCalculatorAPIMemory from "../../src/infra/gateway/memory/ZipCodeCalculatorAPIMemory";
 import GetOrder from "../../src/application/get-order/GetOrder";
 import DatabaseRepositoryFactory from "../../src/infra/factory/DatabaseRepositoryFactory";
-import MemoryRepositoryFactory from "../../src/infra/factory/MemoryRepositoryFactory";
 import RepositoryFactory from "../../src/domain/factory/RepositoryFactory";
 import ZipCodeCalculatorAPI from "../../src/domain/gateway/ZipCodeCalculatorAPI";
 
@@ -15,6 +14,8 @@ beforeEach(async function() {
     zipCodeCalculatorAPI = new ZipCodeCalculatorAPIMemory();
     const orderRepository = repositoryFactory.createOrderRepository();
     await orderRepository.clean();
+    const stockEntryRepository = repositoryFactory.createStockEntryRepository();
+    await  stockEntryRepository.clean();
 })
 
 test("Deve consultar um pedido", async function() {

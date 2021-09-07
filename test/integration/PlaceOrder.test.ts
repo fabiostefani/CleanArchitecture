@@ -13,7 +13,9 @@ beforeEach(async function() {
     repositoryFactory = new MemoryRepositoryFactory();        
     zipCodeCalculatorAPI = new ZipCodeCalculatorAPIMemory();
     const orderRepository = repositoryFactory.createOrderRepository();
-    await orderRepository.clean();    
+    await orderRepository.clean();  
+    const stockEntryRepository = repositoryFactory.createStockEntryRepository();
+    await stockEntryRepository.clean();  
 })
 
 test("Deve fazer um pedido", async function() {
@@ -101,4 +103,18 @@ test("Deve fazer um pedido calculando os impostos", async function() {
     const output = await placeOrder.execute(input);
     expect(output.total).toBe(5982);  
     expect(output.taxes).toBe(1054.5)  ;
+})
+
+test("Não deve possível fazer um pedido de um item sem estoque", async function() {
+    const input = new PlaceOrderInput( {
+        cpf: "778.278.412-36",
+        zipCode: "11.111-111",
+        issueDate: new Date("2021-10-10"),
+        items: [
+            { id: "1", quantity: 12}            
+        ], 
+        coupon: "VALE20"
+    });    
+    const placeOrder = new PlaceOrder(repositoryFactory, zipCodeCalculatorAPI);
+    await expect(placeOrder.execute(input)).rejects.toThrow(new Error("Out of stock"));    
 })
